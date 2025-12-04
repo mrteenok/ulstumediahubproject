@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МедиаХаб УлГТУ | ulstumediahub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://avatars.mds.yandex.net/i?id=d6bb1af969fa20bbd747c4f951dc83f2_l-5175041-images-thumbs&n=13" alt="УлГТУ логотип">
+                <div>
+                    <h1>МедиаХаб УлГТУ</h1>
+                    <p>Платформа для студентов</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" data-page="home"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="#" data-page="news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                    <li><a href="#" data-page="events"><i class="fas fa-calendar-alt"></i> Мероприятия</a></li>
+                    <li><a href="#" data-page="forum"><i class="fas fa-comments"></i> Форум</a></li>
+                    <li><a href="#" data-page="network"><i class="fas fa-users"></i> Сообщество</a></li>
+                </ul>
+            </nav>
+            <div class="user-panel" id="userPanel">
+                <!-- Динамически заполняется через JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container" id="mainContent">
+        <!-- Страница будет загружаться динамически -->
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>МедиаХаб УлГТУ</h3>
+                    <p>© 5 декабря 2025 Платформа для студентов. Все права защищены.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Помощь</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Шаблоны для динамической загрузки -->
+    <template id="homeTemplate">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Добро пожаловать в МедиаХаб УлГТУ!</h2>
+                <p>Общайтесь, делитесь новостями, участвуйте в мероприятиях и находите единомышленников</p>
+                <button class="btn-primary" id="joinBtn"><i class="fas fa-rocket"></i> Присоединиться</button>
+            </div>
+            <div class="hero-image">
+                <img src="https://ulpravda.ru/userfiles/image/УлГТУ(2).jpg" alt="УлГТУ корпус">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><i class="fas fa-newspaper"></i> Последние новости</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-date">25.03.2025</div>
+                    <h3>День открытых дверей в УлГТУ</h3>
+                    <p>Приглашаем абитуриентов и их родителей на День открытых дверей, который состоится 25 марта в главном корпусе.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="news-card">
+                    <div class="news-date">20.03.2025</div>
+                    <h3>Хакатон по веб-разработке</h3>
+                    <p>Студенческий хакатон "WebTech 2025" пройдет с 5 по 7 апреля. Регистрация открыта до 1 апреля.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="news-card">
+                    <div class="news-date">18.03.2025</div>
+                    <h3>Новая лаборатория робототехники</h3>
+                    <p>В корпусе ИФФВТ открылась современная лаборатория робототехники для студентов технических специальностей.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="profileTemplate">
+        <section class="profile-section">
+            <div class="profile-header">
+                <div class="profile-cover">
+                    <div class="cover-image">
+                        <img src="https://ulstu.ru/sites/default/files/styles/1920x600/public/2021-09/glavnyy_korpus_1.jpg" alt="Обложка профиля">
+                    </div>
+                    <div class="profile-avatar">
+                        <img id="profileAvatar" src="" alt="Аватар пользователя">
+                        <button class="btn-avatar-edit" id="changeAvatarBtn">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h1 id="profileName">Никита Еремеев</h1>
+                    <p class="profile-faculty" id="profileFaculty">Факультет: Информационных систем и технологий</p>
+                    <p class="profile-course" id="profileCourse">Курс: 3</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="friendsCount">0</span>
+                            <span class="stat-label">Друзей</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="subscribersCount">0</span>
+                            <span class="stat-label">Подписчиков</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="subscriptionsCount">0</span>
+                            <span class="stat-label">Подписок</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-sidebar">
+                    <div class="profile-actions">
+                        <button class="btn-primary" id="editProfileBtn">
+                            <i class="fas fa-edit"></i> Редактировать профиль
+                        </button>
+                        <button class="btn-secondary" id="addFriendBtn">
+                            <i class="fas fa-user-plus"></i> Добавить в друзья
+                        </button>
+                    </div>
+                    
+                    <div class="profile-about">
+                        <h3><i class="fas fa-info-circle"></i> О себе</h3>
+                        <p id="profileAbout">Здесь будет информация о пользователе...</p>
+                    </div>
+                    
+                    <div class="profile-communities">
+                        <h3><i class="fas fa-users"></i> Мои сообщества</h3>
+                        <div class="communities-list" id="userCommunitiesList">
+                            <!-- Список сообществ будет загружен через JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="profile-friends">
+                        <h3><i class="fas fa-user-friends"></i> Друзья</h3>
+                        <div class="friends-list" id="friendsList">
+                            <!-- Список друзей будет загружен через JS -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-main">
+                    <div class="profile-posts">
+                        <div class="post-form">
+                            <textarea placeholder="Что у вас нового?" id="newPostText"></textarea>
+                            <div class="post-actions">
+                                <button class="btn-primary" id="publishPostBtn">
+                                    <i class="fas fa-paper-plane"></i> Опубликовать
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="posts-feed" id="postsFeed">
+                            <!-- Посты будут загружены через JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="editProfileTemplate">
+        <section class="edit-profile-section">
+            <h2><i class="fas fa-user-edit"></i> Редактирование профиля</h2>
+            
+            <form id="editProfileForm" class="edit-form">
+                <div class="form-group">
+                    <label for="editAvatar">Аватар</label>
+                    <div class="avatar-upload">
+                        <img id="editAvatarPreview" src="" alt="Аватар">
+                        <div class="avatar-upload-options">
+                            <input type="file" id="editAvatar" accept="image/*" class="file-input">
+                            <label for="editAvatar" class="btn-secondary">
+                                <i class="fas fa-upload"></i> Загрузить фото
+                            </label>
+                            <button type="button" class="btn-secondary" id="chooseAvatarBtn">
+                                <i class="fas fa-user-circle"></i> Выбрать аватар
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editFirstName">Имя</label>
+                        <input type="text" id="editFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Фамилия</label>
+                        <input type="text" id="editLastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editFaculty">Факультет</label>
+                    <select id="editFaculty" required>
+                        <option value="">Выберите факультет</option>
+                        <option value="ИСТ">Информационных систем и технологий</option>
+                        <option value="РТФ">Радиотехнический факультет</option>
+                        <option value="МСФ">Машиностроительный факультет</option>
+                        <option value="СФ">Строительный факультет</option>
+                        <option value="ЭФ">Энергетический факультет</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editCourse">Курс</label>
+                    <select id="editCourse" required>
+                        <option value="">Выберите курс</option>
+                        <option value="1">1 курс</option>
+                        <option value="2">2 курс</option>
+                        <option value="3">3 курс</option>
+                        <option value="4">4 курс</option>
+                        <option value="5">5 курс</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editAbout">О себе</label>
+                    <textarea id="editAbout" rows="4" placeholder="Расскажите о себе..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Сохранить изменения
+                    </button>
+                    <button type="button" class="btn-secondary" id="cancelEditBtn">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                </div>
+            </form>
+        </section>
+    </template>
+
+    <template id="communityTemplate">
+        <section class="community-section">
+            <div class="community-header">
+                <div class="community-cover">
+                    <img id="communityCover" src="" alt="Обложка сообщества">
+                </div>
+                <div class="community-info">
+                    <h1 id="communityName">Название сообщества</h1>
+                    <p class="community-category" id="communityCategory">Категория</p>
+                    <div class="community-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="communityMembers">0</span>
+                            <span class="stat-label">Участников</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="communityPosts">0</span>
+                            <span class="stat-label">Постов</span>
+                        </div>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-primary" id="joinCommunityBtn">
+                            <i class="fas fa-sign-in-alt"></i> Присоединиться
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="community-content">
+                <div class="community-sidebar">
+                    <div class="community-about">
+                        <h3><i class="fas fa-info-circle"></i> О сообществе</h3>
+                        <p id="communityDescription">Описание сообщества...</p>
+                    </div>
+                    
+                    <div class="community-rules">
+                        <h3><i class="fas fa-gavel"></i> Правила</h3>
+                        <p id="communityRules">Правила сообщества...</p>
+                    </div>
+                    
+                    <div class="community-moderators">
+                        <h3><i class="fas fa-user-shield"></i> Модераторы</h3>
+                        <div class="moderators-list" id="moderatorsList">
+                            <!-- Список модераторов -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-main">
+                    <div class="community-posts">
+                        <div class="post-form">
+                            <textarea placeholder="Напишите что-нибудь для сообщества..." id="communityPostText"></textarea>
+                            <div class="post-actions">
+                                <button class="btn-primary" id="publishCommunityPostBtn">
+                                    <i class="fas fa-paper-plane"></i> Опубликовать
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="posts-feed" id="communityPostsFeed">
+                            <!-- Посты сообщества будут загружены через JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="forumDiscussionTemplate">
+        <section class="forum-discussion-section">
+            <div class="discussion-header">
+                <h1 id="discussionTitle">Название обсуждения</h1>
+                <div class="discussion-meta">
+                    <span class="discussion-author" id="discussionAuthor">Автор</span>
+                    <span class="discussion-date" id="discussionDate">Дата</span>
+                    <span class="discussion-category" id="discussionCategory">Категория</span>
+                </div>
+            </div>
+            
+            <div class="discussion-content" id="discussionContent">
+                <!-- Содержимое обсуждения будет загружено через JS -->
+            </div>
+            
+            <div class="discussion-replies">
+                <h3><i class="fas fa-comments"></i> Ответы</h3>
+                <div class="replies-list" id="repliesList">
+                    <!-- Ответы будут загружены через JS -->
+                </div>
+            </div>
+            
+            <div class="reply-form">
+                <h3><i class="fas fa-reply"></i> Ваш ответ</h3>
+                <textarea placeholder="Напишите ваш ответ..." id="replyText" rows="4"></textarea>
+                <div class="form-actions">
+                    <button class="btn-primary" id="submitReplyBtn">
+                        <i class="fas fa-paper-plane"></i> Отправить ответ
+                    </button>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Модальные окна -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Вход</button>
+                <button class="auth-tab" data-tab="register">Регистрация</button>
+            </div>
+            
+            <form id="loginForm" class="auth-form active">
+                <h2>Вход в МедиаХаб</h2>
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Войти</button>
+                <button type="button" class="btn-secondary btn-block" id="guestLoginBtn">
+                    <i class="fas fa-user-clock"></i> Войти как гость
+                </button>
+                <p class="auth-footer">Нет аккаунта? <a href="#" class="switch-to-register">Зарегистрироваться</a></p>
+            </form>
+            
+            <form id="registerForm" class="auth-form">
+                <h2>Регистрация</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="regFirstName" placeholder="Имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="regLastName" placeholder="Фамилия" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="regPassword" placeholder="Пароль" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="regConfirmPassword" placeholder="Повторите пароль" required>
+                </div>
+                <div class="form-group">
+                    <select id="regFaculty" required>
+                        <option value="">Выберите факультет</option>
+                        <option value="ИСТ">Информационных систем и технологий</option>
+                        <option value="РТФ">Радиотехнический факультет</option>
+                        <option value="МСФ">Машиностроительный факультет</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Зарегистрироваться</button>
+                <p class="auth-footer">Уже есть аккаунт? <a href="#" class="switch-to-login">Войти</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="avatarModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Изменение аватара</h2>
+            <div class="avatar-tabs">
+                <button class="avatar-tab active" data-tab="upload">Загрузить фото</button>
+                <button class="avatar-tab" data-tab="choose">Выбрать аватар</button>
+            </div>
+            
+            <div class="avatar-upload-tab active">
+                <div class="avatar-upload-area" id="avatarUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Перетащите фото сюда или</p>
+                    <input type="file" id="avatarFileInput" accept="image/*">
+                    <label for="avatarFileInput" class="btn-primary">Выбрать файл</label>
+                    <p class="file-info">Максимальный размер: 5MB</p>
+                </div>
+                <div class="avatar-preview">
+                    <img id="avatarPreview" src="" alt="Предпросмотр">
+                </div>
+                <button class="btn-primary" id="saveAvatarBtn" disabled>
+                    <i class="fas fa-save"></i> Сохранить аватар
+                </button>
+            </div>
+            
+            <div class="avatar-choose-tab">
+                <div class="avatar-options">
+                    <div class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student1" alt="Аватар 1">
+                        <button class="btn-secondary select-avatar" data-avatar="1">Выбрать</button>
+                    </div>
+                    <div class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student2" alt="Аватар 2">
+                        <button class="btn-secondary select-avatar" data-avatar="2">Выбрать</button>
+                    </div>
+                    <div class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student3" alt="Аватар 3">
+                        <button class="btn-secondary select-avatar" data-avatar="3">Выбрать</button>
+                    </div>
+                    <div class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student4" alt="Аватар 4">
+                        <button class="btn-secondary select-avatar" data-avatar="4">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addFriendModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Добавить в друзья</h2>
+            
+            <div class="search-box">
+                <input type="text" id="friendSearch" placeholder="Поиск по имени или факультету...">
+                <button class="btn-secondary" id="friendSearchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="friends-list-modal" id="friendsListModal">
+                <!-- Список пользователей будет загружен через JS -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="communityModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="communityModalContent">
+                <!-- Содержимое модального окна сообщества будет загружено через JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
