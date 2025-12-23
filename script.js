@@ -1,4 +1,4 @@
-// База данных (localStorage)
+// База данных (localStorage) - ОБНОВЛЕННАЯ ВЕРСИЯ
 class Database {
     constructor() {
         this.usersKey = 'mediahub_users';
@@ -10,6 +10,7 @@ class Database {
         this.communitiesKey = 'mediahub_communities';
         this.forumRepliesKey = 'mediahub_forum_replies';
         this.communityPostsKey = 'mediahub_community_posts';
+        this.newsKey = 'mediahub_news';
         this.init();
     }
 
@@ -26,12 +27,12 @@ class Database {
                     faculty: 'ИСТ',
                     facultyName: 'Информационных систем и технологий',
                     course: '3',
-                    about: 'Студент 3 курса факультета ИСТ. Увлекаюсь программированием и робототехникой.',
+                    about: 'Студент 3 курса факультета ИСТ. Увлекаюсь программированием и робототехникой. Люблю участвовать в хакатонах.',
                     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=nikita',
-                    subscribers: [2, 3],
-                    subscriptions: [2],
+                    subscribers: [2, 3, 4, 5, 6],
+                    subscriptions: [2, 3, 7],
                     communities: [1, 2],
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date('2024-09-01').toISOString()
                 },
                 {
                     id: 2,
@@ -42,12 +43,12 @@ class Database {
                     faculty: 'РТФ',
                     facultyName: 'Радиотехнический факультет',
                     course: '2',
-                    about: 'Студент радиотехнического факультета. Люблю музыку и спорт.',
+                    about: 'Студент радиотехнического факультета. Занимаюсь радиолюбительством, увлекаюсь музыкой и спортом.',
                     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alexander',
-                    subscribers: [1],
-                    subscriptions: [1, 3],
+                    subscribers: [1, 3, 8],
+                    subscriptions: [1, 3, 9],
                     communities: [2, 3],
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date('2024-09-01').toISOString()
                 },
                 {
                     id: 3,
@@ -58,14 +59,19 @@ class Database {
                     faculty: 'МСФ',
                     facultyName: 'Машиностроительный факультет',
                     course: '4',
-                    about: 'Старшекурсник машиностроительного факультета. Активно участвую в научной работе.',
+                    about: 'Старшекурсник машиностроительного факультета. Активно участвую в научной работе, пишу диплом.',
                     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=student3',
-                    subscribers: [1],
-                    subscriptions: [2],
+                    subscribers: [1, 2, 10],
+                    subscriptions: [2, 4],
                     communities: [1],
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date('2024-09-01').toISOString()
                 }
             ];
+            
+            // Добавляем 50 новых пользователей
+            const additionalUsers = this.generateAdditionalUsers(50);
+            defaultUsers.push(...additionalUsers);
+            
             localStorage.setItem(this.usersKey, JSON.stringify(defaultUsers));
         }
 
@@ -76,10 +82,11 @@ class Database {
                     userId: 1,
                     content: 'Привет всем! Только что зарегистрировался на платформе. Кто тоже с факультета ИСТ?',
                     createdAt: new Date('2025-03-15').toISOString(),
-                    likes: [2, 3],
+                    likes: [2, 3, 4, 5, 6, 7],
                     comments: [
                         { id: 1, userId: 2, text: 'Привет! Я с РТФ, но тоже интересуюсь программированием!', createdAt: new Date('2025-03-15').toISOString() },
-                        { id: 2, userId: 3, text: 'Добро пожаловать! МСФ тут тоже есть :)', createdAt: new Date('2025-03-15').toISOString() }
+                        { id: 2, userId: 3, text: 'Добро пожаловать! МСФ тут тоже есть :)', createdAt: new Date('2025-03-15').toISOString() },
+                        { id: 3, userId: 4, text: 'ИСТ 2 курс, приветствую!', createdAt: new Date('2025-03-16').toISOString() }
                     ]
                 },
                 {
@@ -87,27 +94,46 @@ class Database {
                     userId: 2,
                     content: 'Завтра интересная лекция по радиотехнике в 14:00, ауд. 310. Кто идет?',
                     createdAt: new Date('2025-03-20').toISOString(),
-                    likes: [1],
-                    comments: []
+                    likes: [1, 3, 8, 9],
+                    comments: [
+                        { id: 1, userId: 1, text: 'Я обязательно буду!', createdAt: new Date('2025-03-20').toISOString() },
+                        { id: 2, userId: 3, text: 'Приду, если освобожусь от пар', createdAt: new Date('2025-03-20').toISOString() }
+                    ]
                 },
                 {
                     id: 3,
                     userId: 3,
                     content: 'Ищем участников для проекта по робототехнике. Если есть опыт с Arduino - пишите!',
                     createdAt: new Date('2025-03-25').toISOString(),
-                    likes: [1, 2],
-                    comments: []
+                    likes: [1, 2, 4, 5, 6],
+                    comments: [
+                        { id: 1, userId: 1, text: 'У меня есть опыт! Пиши в личку', createdAt: new Date('2025-03-25').toISOString() },
+                        { id: 2, userId: 2, text: 'Интересно! Какая тема проекта?', createdAt: new Date('2025-03-25').toISOString() }
+                    ]
                 }
             ];
+            
+            // Добавляем дополнительные посты
+            const additionalPosts = this.generateAdditionalPosts(20);
+            defaultPosts.push(...additionalPosts);
+            
             localStorage.setItem(this.postsKey, JSON.stringify(defaultPosts));
         }
 
         if (!localStorage.getItem(this.friendshipsKey)) {
             const defaultFriendships = [
                 { id: 1, userId: 1, friendId: 2, status: 'accepted' },
-                { id: 2, userId: 1, friendId: 3, status: 'pending' },
-                { id: 3, userId: 2, friendId: 3, status: 'accepted' }
+                { id: 2, userId: 1, friendId: 3, status: 'accepted' },
+                { id: 3, userId: 2, friendId: 3, status: 'accepted' },
+                { id: 4, userId: 1, friendId: 4, status: 'accepted' },
+                { id: 5, userId: 2, friendId: 5, status: 'accepted' },
+                { id: 6, userId: 3, friendId: 6, status: 'accepted' }
             ];
+            
+            // Добавляем дополнительные дружеские связи
+            const additionalFriendships = this.generateAdditionalFriendships(30);
+            defaultFriendships.push(...additionalFriendships);
+            
             localStorage.setItem(this.friendshipsKey, JSON.stringify(defaultFriendships));
         }
 
@@ -122,7 +148,7 @@ class Database {
                     location: 'Главный корпус, ауд. 100',
                     organizer: 'Приемная комиссия',
                     category: 'Общее',
-                    participants: [1, 2, 3],
+                    participants: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                     maxParticipants: 100,
                     image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-03/ulstu_4.jpg'
                 },
@@ -135,7 +161,7 @@ class Database {
                     location: 'IT-коворкинг, 4 корпус',
                     organizer: 'IT-клуб УлГТУ',
                     category: 'IT',
-                    participants: [1],
+                    participants: [1, 3, 4, 5, 6, 7],
                     maxParticipants: 50,
                     image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/hakaton.jpg'
                 },
@@ -148,12 +174,50 @@ class Database {
                     location: 'Ауд. 310, Главный корпус',
                     organizer: 'Кафедра ИСТ',
                     category: 'Наука',
-                    participants: [1, 2, 3],
+                    participants: [1, 2, 3, 8, 9, 10],
                     maxParticipants: 80,
                     image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2020-11/ai_lecture.jpg'
                 }
             ];
+            
+            // Добавляем дополнительные мероприятия
+            const additionalEvents = this.generateAdditionalEvents(10);
+            defaultEvents.push(...additionalEvents);
+            
             localStorage.setItem(this.eventsKey, JSON.stringify(defaultEvents));
+        }
+
+        if (!localStorage.getItem(this.newsKey)) {
+            const defaultNews = [
+                {
+                    id: 1,
+                    title: 'Открытие нового STEM-центра',
+                    description: 'В УлГТУ открылся современный STEM-центр для школьников и студентов. Центр оборудован по последнему слову техники.',
+                    content: 'На прошлой неделе в нашем университете состоялось торжественное открытие нового STEM-центра. Центр оснащен современным оборудованием для занятий робототехникой, 3D-моделированием и программированием.',
+                    date: '2025-03-25',
+                    category: 'Образование',
+                    image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-03/stem_center.jpg',
+                    views: 1250,
+                    author: 'Пресс-служба УлГТУ'
+                },
+                {
+                    id: 2,
+                    title: 'Студенты УлГТУ победили в олимпиаде',
+                    description: 'Команда студентов факультета ИСТ заняла первое место во всероссийской олимпиаде по программированию.',
+                    content: 'Команда студентов факультета информационных систем и технологий в составе трех человек завоевала первое место на всероссийской олимпиаде по программированию, которая проходила в Москве.',
+                    date: '2025-03-20',
+                    category: 'Достижения',
+                    image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/olimpiada.jpg',
+                    views: 980,
+                    author: 'Кафедра ИСТ'
+                }
+            ];
+            
+            // Добавляем 10 новостей с датами от 20 ноября до 10 декабря 2025
+            const additionalNews = this.generateAdditionalNews(10);
+            defaultNews.push(...additionalNews);
+            
+            localStorage.setItem(this.newsKey, JSON.stringify(defaultNews));
         }
 
         if (!localStorage.getItem(this.forumTopicsKey)) {
@@ -205,8 +269,8 @@ class Database {
                     name: 'IT-клуб УлГТУ',
                     description: 'Сообщество для всех, кто интересуется информационными технологиями. Хакатоны, лекции, проекты. Присоединяйтесь к нам!',
                     category: 'Технологии',
-                    members: [1, 2, 3],
-                    moderators: [1],
+                    members: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                    moderators: [1, 4],
                     createdAt: new Date('2025-01-15').toISOString(),
                     image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/it_club.jpg',
                     coverImage: 'https://ulstu.ru/sites/default/files/styles/1920x600/public/2021-10/it_cover.jpg',
@@ -217,8 +281,8 @@ class Database {
                     name: 'Спортивный клуб "Политехник"',
                     description: 'Тренировки, соревнования, здоровый образ жизни. У нас есть секции по волейболу, баскетболу, футболу и другим видам спорта.',
                     category: 'Спорт',
-                    members: [2, 3],
-                    moderators: [2],
+                    members: [2, 3, 5, 6, 7, 8, 9, 10, 11, 12],
+                    moderators: [2, 5],
                     createdAt: new Date('2025-02-01').toISOString(),
                     image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-09/sport.jpg',
                     coverImage: 'https://ulstu.ru/sites/default/files/styles/1920x600/public/2021-09/sport_cover.jpg',
@@ -229,8 +293,8 @@ class Database {
                     name: 'Научное студенческое общество',
                     description: 'Для тех, кто занимается научной работой. Конференции, публикации, гранты. Развиваем научный потенциал студентов!',
                     category: 'Наука',
-                    members: [1, 3],
-                    moderators: [3],
+                    members: [1, 3, 4, 6, 8, 10, 12, 14, 16, 18],
+                    moderators: [3, 6],
                     createdAt: new Date('2025-01-20').toISOString(),
                     image: 'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-02/science.jpg',
                     coverImage: 'https://ulstu.ru/sites/default/files/styles/1920x600/public/2022-02/science_cover.jpg',
@@ -278,7 +342,7 @@ class Database {
                     userId: 1,
                     content: 'На этой неделе планируем провести воркшоп по React. Кто хочет присоединиться?',
                     createdAt: new Date('2025-03-20').toISOString(),
-                    likes: [2, 3]
+                    likes: [2, 3, 4, 5]
                 },
                 {
                     id: 2,
@@ -286,11 +350,369 @@ class Database {
                     userId: 3,
                     content: 'В субботу тренировка по волейболу в 10:00. Приходите все желающие!',
                     createdAt: new Date('2025-03-22').toISOString(),
-                    likes: [2]
+                    likes: [2, 5, 6]
                 }
             ];
             localStorage.setItem(this.communityPostsKey, JSON.stringify(defaultCommunityPosts));
         }
+    }
+
+    // Метод для генерации 50 дополнительных пользователей
+    generateAdditionalUsers(count) {
+        const firstNames = [
+            'Алексей', 'Дмитрий', 'Максим', 'Артем', 'Иван', 'Михаил', 'Сергей', 'Андрей', 'Павел', 'Егор',
+            'Владимир', 'Константин', 'Роман', 'Олег', 'Кирилл', 'Глеб', 'Тимур', 'Даниил', 'Евгений', 'Станислав',
+            'Анна', 'Мария', 'Екатерина', 'Дарья', 'Анастасия', 'Виктория', 'Елена', 'Ирина', 'Ольга', 'Татьяна',
+            'Юлия', 'Алина', 'Ксения', 'Полина', 'София', 'Валерия', 'Александра', 'Ульяна', 'Маргарита', 'Наталья'
+        ];
+        
+        const lastNames = [
+            'Иванов', 'Петров', 'Сидоров', 'Смирнов', 'Кузнецов', 'Попов', 'Лебедев', 'Козлов', 'Новиков', 'Морозов',
+            'Волков', 'Соловьев', 'Васильев', 'Зайцев', 'Павлов', 'Семенов', 'Голубев', 'Виноградов', 'Богданов', 'Воробьев',
+            'Федоров', 'Михайлов', 'Беляев', 'Тарасов', 'Белов', 'Комаров', 'Орлов', 'Киселев', 'Макаров', 'Андреев',
+            'Ковалев', 'Ильин', 'Гусев', 'Титов', 'Кузьмин', 'Кудрявцев', 'Баранов', 'Куликов', 'Алексеев', 'Степанов'
+        ];
+        
+        const faculties = ['ИСТ', 'РТФ', 'МСФ', 'СФ', 'ЭФ'];
+        const facultyNames = {
+            'ИСТ': 'Информационных систем и технологий',
+            'РТФ': 'Радиотехнический факультет',
+            'МСФ': 'Машиностроительный факультет',
+            'СФ': 'Строительный факультет',
+            'ЭФ': 'Энергетический факультет'
+        };
+        
+        const courses = ['1', '2', '3', '4', '5'];
+        const aboutTexts = [
+            'Студент, увлекаюсь программированием и технологиями.',
+            'Люблю спорт и активный образ жизни.',
+            'Занимаюсь научной работой, интересуюсь исследованиями.',
+            'Участвую в студенческих мероприятиях и волонтерстве.',
+            'Изучаю иностранные языки и культуру других стран.',
+            'Мечтаю стать профессионалом в своей области.',
+            'Ценю общение и новые знакомства.',
+            'Стремлюсь к саморазвитию и получению новых знаний.',
+            'Люблю музыку и творчество.',
+            'Активно участвую в жизни университета.'
+        ];
+        
+        const users = [];
+        const startId = 4; // Начинаем с ID 4, так как 1-3 уже есть
+        
+        for (let i = 0; i < count; i++) {
+            const id = startId + i;
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            const faculty = faculties[Math.floor(Math.random() * faculties.length)];
+            const course = courses[Math.floor(Math.random() * courses.length)];
+            const about = aboutTexts[Math.floor(Math.random() * aboutTexts.length)];
+            
+            // Генерируем случайное количество подписчиков и подписок
+            const subscribers = [];
+            const subscriptions = [];
+            const communities = [];
+            
+            // 20% шанс быть в каждом сообществе
+            if (Math.random() < 0.2) communities.push(1);
+            if (Math.random() < 0.2) communities.push(2);
+            if (Math.random() < 0.2) communities.push(3);
+            
+            users.push({
+                id: id,
+                email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${id}@ulstu.ru`,
+                password: '123456',
+                firstName: firstName,
+                lastName: lastName,
+                faculty: faculty,
+                facultyName: facultyNames[faculty] || faculty,
+                course: course,
+                about: about,
+                avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${firstName}${lastName}${id}`,
+                subscribers: subscribers,
+                subscriptions: subscriptions,
+                communities: communities,
+                createdAt: new Date(2024, 8, Math.floor(Math.random() * 30) + 1).toISOString() // Сентябрь 2024
+            });
+        }
+        
+        return users;
+    }
+
+    // Метод для генерации дополнительных постов
+    generateAdditionalPosts(count) {
+        const posts = [];
+        const contentTemplates = [
+            'Сегодня отличный день для учебы! Кто со мной в библиотеке?',
+            'Только что сдал сложный проект! Ощущение невероятное!',
+            'Ищу напарника для проекта по веб-разработке. Пишите в личку!',
+            'Кто идет на концерт в пятницу? Есть лишний билет!',
+            'Поделитесь, пожалуйста, конспектами по высшей математике!',
+            'Наш факультет выиграл спортивные соревнования! Ура!',
+            'Завтра дедлайн по курсовой, а я только начал...',
+            'Кто разбирается в Python? Нужна помощь с задачей!',
+            'Лучшие места для учебы в университете? Ваши рекомендации?',
+            'Как совмещать учебу, работу и личную жизнь? Делитесь опытом!'
+        ];
+        
+        const startId = 4;
+        
+        for (let i = 0; i < count; i++) {
+            const id = startId + i;
+            const userId = Math.floor(Math.random() * 50) + 1; // Случайный пользователь из 50
+            const content = contentTemplates[Math.floor(Math.random() * contentTemplates.length)];
+            const likesCount = Math.floor(Math.random() * 20);
+            const likes = [];
+            
+            // Генерируем случайные лайки
+            for (let j = 0; j < likesCount; j++) {
+                const likeUserId = Math.floor(Math.random() * 50) + 1;
+                if (!likes.includes(likeUserId)) {
+                    likes.push(likeUserId);
+                }
+            }
+            
+            // Генерируем случайные комментарии
+            const comments = [];
+            const commentsCount = Math.floor(Math.random() * 5);
+            for (let j = 0; j < commentsCount; j++) {
+                const commentUserId = Math.floor(Math.random() * 50) + 1;
+                const commentTexts = [
+                    'Отличный пост!',
+                    'Согласен с тобой!',
+                    'Интересная мысль!',
+                    'Поделюсь своим опытом...',
+                    'Удачи в начинаниях!'
+                ];
+                comments.push({
+                    id: j + 1,
+                    userId: commentUserId,
+                    text: commentTexts[Math.floor(Math.random() * commentTexts.length)],
+                    createdAt: new Date(2025, 2, Math.floor(Math.random() * 10) + 15).toISOString() // Март 2025
+                });
+            }
+            
+            posts.push({
+                id: id,
+                userId: userId,
+                content: content,
+                createdAt: new Date(2025, 2, Math.floor(Math.random() * 10) + 15).toISOString(), // Март 2025
+                likes: likes,
+                comments: comments
+            });
+        }
+        
+        return posts;
+    }
+
+    // Метод для генерации дополнительных дружеских связей
+    generateAdditionalFriendships(count) {
+        const friendships = [];
+        const startId = 7; // Начинаем с ID 7, так как 1-6 уже есть
+        
+        for (let i = 0; i < count; i++) {
+            const id = startId + i;
+            const userId = Math.floor(Math.random() * 50) + 1;
+            let friendId;
+            
+            // Убедимся, что friendId не равен userId
+            do {
+                friendId = Math.floor(Math.random() * 50) + 1;
+            } while (friendId === userId);
+            
+            const statuses = ['accepted', 'pending'];
+            const status = statuses[Math.floor(Math.random() * statuses.length)];
+            
+            friendships.push({
+                id: id,
+                userId: userId,
+                friendId: friendId,
+                status: status
+            });
+        }
+        
+        return friendships;
+    }
+
+    // Метод для генерации дополнительных мероприятий
+    generateAdditionalEvents(count) {
+        const events = [];
+        const titles = [
+            'Мастер-класс по публичным выступлениям',
+            'Семинар по финансовой грамотности',
+            'Турнир по шахматам',
+            'Воркшоп по дизайну интерфейсов',
+            'Конференция молодых ученых',
+            'Квест по кампусу',
+            'Ярмарка вакансий',
+            'Кинопоказ и обсуждение',
+            'Тренинг по тайм-менеджменту',
+            'Выставка студенческих проектов'
+        ];
+        
+        const descriptions = [
+            'Научитесь уверенно выступать перед аудиторией',
+            'Узнайте, как правильно управлять личными финансами',
+            'Проверьте свои навыки в интеллектуальной игре',
+            'Освойте основы UI/UX дизайна',
+            'Представьте свои исследования и получите обратную связь',
+            'Пройдите интересный маршрут по территории университета',
+            'Познакомьтесь с потенциальными работодателями',
+            'Посмотрите и обсудите актуальное кино',
+            'Научитесь эффективно планировать свое время',
+            'Посмотрите лучшие работы студентов разных факультетов'
+        ];
+        
+        const categories = ['Образование', 'Карьера', 'Спорт', 'Культура', 'Наука'];
+        const locations = ['Главный корпус', 'Библиотека', 'Актовый зал', 'Спортзал', 'IT-коворкинг'];
+        
+        const startId = 4;
+        
+        for (let i = 0; i < count; i++) {
+            const id = startId + i;
+            const month = Math.floor(Math.random() * 2) + 4; // Апрель-май
+            const day = Math.floor(Math.random() * 30) + 1;
+            
+            events.push({
+                id: id,
+                title: titles[Math.floor(Math.random() * titles.length)],
+                description: descriptions[Math.floor(Math.random() * descriptions.length)],
+                date: `2025-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
+                time: `${Math.floor(Math.random() * 8) + 9}:00`,
+                location: locations[Math.floor(Math.random() * locations.length)],
+                organizer: 'Студенческий совет',
+                category: categories[Math.floor(Math.random() * categories.length)],
+                participants: [],
+                maxParticipants: Math.floor(Math.random() * 50) + 30,
+                image: `https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/event_${Math.floor(Math.random() * 5) + 1}.jpg`
+            });
+        }
+        
+        return events;
+    }
+
+    // Метод для генерации 10 новостей с датами от 20 ноября до 10 декабря 2025
+    generateAdditionalNews(count) {
+        const news = [];
+        const newsTemplates = [
+            {
+                title: 'Запуск новой образовательной программы',
+                description: 'УлГТУ запускает совместную магистерскую программу с ведущими IT-компаниями региона.',
+                content: 'В рамках развития сотрудничества с IT-индустрией, УлГТУ запускает новую магистерскую программу "Цифровые технологии в промышленности". Программа разработана совместно с ведущими IT-компаниями региона и включает практические модули на предприятиях-партнерах.',
+                category: 'Образование'
+            },
+            {
+                title: 'Реконструкция спортивного комплекса',
+                description: 'Началась масштабная реконструкция университетского спортивного комплекса.',
+                content: 'В рамках программы развития спортивной инфраструктуры началась реконструкция спортивного комплекса УлГТУ. Планируется обновление беговых дорожек, футбольного поля и строительство нового бассейна. Работы завершатся к началу нового учебного года.',
+                category: 'Спорт'
+            },
+            {
+                title: 'Студенческая научная конференция',
+                description: 'Более 200 студентов представили свои исследования на ежегодной конференции.',
+                content: 'В УлГТУ прошла ежегодная студенческая научная конференция, в которой приняли участие более 200 студентов со всех факультетов. Лучшие работы будут опубликованы в сборнике научных трудов университета.',
+                category: 'Наука'
+            },
+            {
+                title: 'Внедрение системы электронных зачеток',
+                description: 'С нового семестра все студенты перейдут на электронные зачетные книжки.',
+                content: 'Для повышения эффективности учебного процесса с нового семестра в УлГТУ будет внедрена система электронных зачетных книжек. Студенты смогут отслеживать свои оценки и успеваемость через мобильное приложение.',
+                category: 'Технологии'
+            },
+            {
+                title: 'Открытие языкового центра',
+                description: 'В университете открылся современный центр изучения иностранных языков.',
+                content: 'Современный языковой центр оснащен мультимедийным оборудованием и предоставляет возможность изучения 10 иностранных языков. Центр будет работать как для студентов, так и для сотрудников университета.',
+                category: 'Образование'
+            },
+            {
+                title: 'Студенты-волонтеры помогли городу',
+                description: 'Более 500 студентов приняли участие в экологическом субботнике.',
+                content: 'Студенты УлГТУ организовали масштабный экологический субботник в парках города. За один день было собрано более 2 тонн мусора и высажено 100 новых деревьев.',
+                category: 'Общественная жизнь'
+            },
+            {
+                title: 'Новые лаборатории для инженеров',
+                description: 'Факультет МСФ получил современное оборудование для практических занятий.',
+                content: 'Благодаря гранту министерства образования, машиностроительный факультет получил новое оборудование для лабораторий: 3D-принтеры, станки с ЧПУ и измерительные приборы последнего поколения.',
+                category: 'Оборудование'
+            },
+            {
+                title: 'Сотрудничество с зарубежным вузом',
+                description: 'УлГТУ подписал соглашение о сотрудничестве с университетом Германии.',
+                content: 'Подписано соглашение о двойных дипломах и академическом обмене с Техническим университетом Дрездена. Первый обмен студентами состоится уже в следующем семестре.',
+                category: 'Международное сотрудничество'
+            },
+            {
+                title: 'Фестиваль студенческого творчества',
+                description: 'В университете прошел ежегодный фестиваль талантов "Студенческая весна".',
+                content: 'Более 300 студентов представили свои творческие номера на фестивале "Студенческая весна". В программе были танцы, вокал, театральные постановки и художественные выставки.',
+                category: 'Культура'
+            },
+            {
+                title: 'IT-хакатон для школьников',
+                description: 'УлГТУ провел хакатон по программированию для старшеклассников.',
+                content: 'Более 100 школьников из разных городов региона приняли участие в хакатоне по веб-разработке. Победители получили дополнительные баллы при поступлении в УлГТУ.',
+                category: 'Профориентация'
+            }
+        ];
+        
+        const images = [
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-03/education.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-09/sport_complex.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-02/science_conf.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/tech.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2020-11/language.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-09/volunteers.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-03/labs.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/international.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2022-02/festival.jpg',
+            'https://ulstu.ru/sites/default/files/styles/700x430/public/news/2021-10/hackathon_school.jpg'
+        ];
+        
+        const startId = 3;
+        const startDate = new Date(2025, 10, 20); // 20 ноября 2025
+        const endDate = new Date(2025, 11, 10); // 10 декабря 2025
+        
+        for (let i = 0; i < count; i++) {
+            const id = startId + i;
+            const template = newsTemplates[i % newsTemplates.length];
+            const date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+            const dateStr = date.toISOString().split('T')[0];
+            
+            news.push({
+                id: id,
+                title: template.title,
+                description: template.description,
+                content: template.content,
+                date: dateStr,
+                category: template.category,
+                image: images[i % images.length],
+                views: Math.floor(Math.random() * 1000) + 500,
+                author: 'Пресс-служба УлГТУ'
+            });
+        }
+        
+        return news;
+    }
+
+    // Новости
+    getNews() {
+        return JSON.parse(localStorage.getItem(this.newsKey)) || [];
+    }
+
+    getRecentNews(limit = 10) {
+        const news = this.getNews();
+        return news
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, limit);
+    }
+
+    getNewsByDateRange(startDate, endDate) {
+        const news = this.getNews();
+        return news.filter(item => {
+            const itemDate = new Date(item.date);
+            return itemDate >= new Date(startDate) && itemDate <= new Date(endDate);
+        });
     }
 
     // Пользователи
@@ -793,6 +1215,9 @@ class MediaHubApp {
         container.innerHTML = '';
         container.appendChild(template.content.cloneNode(true));
         
+        // Загружаем последние новости
+        this.loadRecentNews(container);
+        
         // Обработчики для домашней страницы
         document.getElementById('joinBtn')?.addEventListener('click', () => {
             if (!this.currentUser) {
@@ -814,32 +1239,128 @@ class MediaHubApp {
         }
     }
 
+    loadRecentNews(container) {
+        const newsSection = container.querySelector('.section');
+        if (!newsSection) return;
+        
+        const recentNews = this.db.getRecentNews(3);
+        
+        if (recentNews.length > 0) {
+            const newsGrid = newsSection.querySelector('.news-grid');
+            if (newsGrid) {
+                // Добавляем новые новости
+                recentNews.forEach(news => {
+                    const newsCard = document.createElement('div');
+                    newsCard.className = 'news-card';
+                    newsCard.innerHTML = `
+                        <img src="${news.image}" alt="${news.title}" class="news-image">
+                        <div class="news-content">
+                            <div class="news-date">${news.date}</div>
+                            <h3>${news.title}</h3>
+                            <p>${news.description}</p>
+                            <a href="#" class="read-more" data-news-id="${news.id}">Подробнее <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                    newsGrid.appendChild(newsCard);
+                });
+            }
+        }
+    }
+
     loadNewsPage(container) {
+        const allNews = this.db.getNews();
+        const recentNews = allNews.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        // Новости с 20 ноября по 10 декабря 2025
+        const novemberDecemberNews = this.db.getNewsByDateRange('2025-11-20', '2025-12-10');
+        
         container.innerHTML = `
             <section class="section">
-                <h2><i class="fas fa-newspaper"></i> Новости УлГТУ</h2>
-                <div class="news-grid">
-                    <div class="news-card">
-                        <div class="news-date">25.03.2025</div>
-                        <h3>Открытие нового STEM-центра</h3>
-                        <p>В УлГТУ открылся современный STEM-центр для школьников и студентов. Центр оборудован по последнему слову техники.</p>
-                        <a href="#" class="read-more">Подробнее <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-date">20.03.2025</div>
-                        <h3>Студенты УлГТУ победили в олимпиаде</h3>
-                        <p>Команда студентов факультета ИСТ заняла первое место во всероссийской олимпиаде по программированию.</p>
-                        <a href="#" class="read-more">Подробнее <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-date">18.03.2025</div>
-                        <h3>Новая программа обмена с Германией</h3>
-                        <p>УлГТУ запускает программу студенческого обмена с техническим университетом Дрездена.</p>
-                        <a href="#" class="read-more">Подробнее <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <h2><i class="fas fa-newspaper"></i> Все новости УлГТУ</h2>
+                
+                <div class="news-filter">
+                    <button class="btn-secondary active" data-filter="all">Все новости</button>
+                    <button class="btn-secondary" data-filter="recent">Последние</button>
+                    <button class="btn-secondary" data-filter="nov-dec">Ноябрь-Декабрь 2025</button>
+                </div>
+                
+                <div class="news-list" id="newsList">
+                    ${recentNews.map(news => `
+                        <div class="news-card-full" data-category="${news.category}" data-date="${news.date}">
+                            <img src="${news.image}" alt="${news.title}">
+                            <div class="news-content-full">
+                                <div class="news-date">${news.date}</div>
+                                <span class="news-category">${news.category}</span>
+                                <h3>${news.title}</h3>
+                                <p>${news.description}</p>
+                                <p><strong>Просмотров:</strong> ${news.views}</p>
+                                <a href="#" class="read-more" data-news-id="${news.id}">Читать полностью <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
             </section>
         `;
+        
+        // Добавляем стили для фильтра новостей
+        const style = document.createElement('style');
+        style.textContent = `
+            .news-filter {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+            }
+            .news-filter button.active {
+                background-color: #ff6b00;
+            }
+            .news-list {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Обработчики фильтров
+        container.querySelectorAll('.news-filter button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Убираем активный класс у всех кнопок
+                container.querySelectorAll('.news-filter button').forEach(b => b.classList.remove('active'));
+                // Добавляем активный класс текущей кнопке
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                const newsList = container.querySelector('#newsList');
+                
+                let filteredNews = allNews;
+                
+                switch(filter) {
+                    case 'recent':
+                        filteredNews = allNews.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
+                        break;
+                    case 'nov-dec':
+                        filteredNews = novemberDecemberNews.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        break;
+                    default:
+                        filteredNews = allNews.sort((a, b) => new Date(b.date) - new Date(a.date));
+                }
+                
+                newsList.innerHTML = filteredNews.map(news => `
+                    <div class="news-card-full" data-category="${news.category}" data-date="${news.date}">
+                        <img src="${news.image}" alt="${news.title}">
+                        <div class="news-content-full">
+                            <div class="news-date">${news.date}</div>
+                            <span class="news-category">${news.category}</span>
+                            <h3>${news.title}</h3>
+                            <p>${news.description}</p>
+                            <p><strong>Просмотров:</strong> ${news.views}</p>
+                            <a href="#" class="read-more" data-news-id="${news.id}">Читать полностью <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                `).join('');
+            });
+        });
     }
 
     loadEventsPage(container) {
@@ -1349,17 +1870,22 @@ class MediaHubApp {
                 </section>
             ` : `
                 <section class="section">
-                    <h2><i class="fas fa-user-friends"></i> Студенты</h2>
+                    <h2><i class="fas fa-user-friends"></i> Студенты УлГТУ</h2>
                     <div class="search-box">
-                        <input type="text" id="userSearch" placeholder="Поиск по имени, фамилии или факультету...">
+                        <input type="text" id="userSearch" placeholder="Поиск по имени, фамилии или факультету..." value="">
                         <button class="btn-secondary" id="searchBtn"><i class="fas fa-search"></i></button>
                     </div>
+                    <div class="users-info">
+                        <p><i class="fas fa-info-circle"></i> Всего студентов: <strong>${allUsers.length}</strong></p>
+                    </div>
                     <div class="users-grid" id="usersGrid">
-                        ${allUsers.filter(user => this.currentUser && user.id !== this.currentUser.id).map(user => {
-                            const isFriend = this.db.getUserFriends(this.currentUser?.id || 0).includes(user.id);
+                        ${allUsers.map(user => {
+                            // Пропускаем отображение текущего пользователя
+                            if (user.id === this.currentUser.id) return '';
+                            
                             const friendship = this.db.getFriendships().find(f => 
-                                (f.userId === this.currentUser?.id && f.friendId === user.id) ||
-                                (f.userId === user.id && f.friendId === this.currentUser?.id)
+                                (f.userId === this.currentUser.id && f.friendId === user.id) ||
+                                (f.userId === user.id && f.friendId === this.currentUser.id)
                             );
                             
                             let buttonText = 'Добавить в друзья';
@@ -1368,7 +1894,7 @@ class MediaHubApp {
                             
                             if (friendship) {
                                 if (friendship.status === 'pending') {
-                                    if (friendship.userId === this.currentUser?.id) {
+                                    if (friendship.userId === this.currentUser.id) {
                                         buttonText = 'Запрос отправлен';
                                         buttonClass = 'btn-secondary';
                                         disabled = true;
@@ -1497,6 +2023,16 @@ class MediaHubApp {
                 border-radius: 5px;
                 font-family: 'Roboto', sans-serif;
             }
+            .users-info {
+                background: #f8f9fa;
+                padding: 10px 15px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                color: #666;
+            }
+            .users-info i {
+                margin-right: 8px;
+            }
             .users-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1597,25 +2133,28 @@ class MediaHubApp {
         const userSearch = container.querySelector('#userSearch');
         const searchBtn = container.querySelector('#searchBtn');
         const usersGrid = container.querySelector('#usersGrid');
+        const usersInfo = container.querySelector('.users-info');
         
-        if (userSearch && searchBtn && usersGrid) {
+        if (userSearch && searchBtn && usersGrid && usersInfo) {
             const performSearch = () => {
                 const query = userSearch.value.trim();
                 let filteredUsers = this.db.getUsers().filter(user => 
-                    this.currentUser && user.id !== this.currentUser.id
+                    user.id !== this.currentUser.id
                 );
                 
                 if (query) {
                     filteredUsers = this.db.searchUsers(query).filter(user => 
-                        this.currentUser && user.id !== this.currentUser.id
+                        user.id !== this.currentUser.id
                     );
                 }
                 
+                // Обновляем информацию о количестве
+                usersInfo.innerHTML = `<p><i class="fas fa-info-circle"></i> Найдено студентов: <strong>${filteredUsers.length}</strong></p>`;
+                
                 usersGrid.innerHTML = filteredUsers.map(user => {
-                    const isFriend = this.db.getUserFriends(this.currentUser?.id || 0).includes(user.id);
                     const friendship = this.db.getFriendships().find(f => 
-                        (f.userId === this.currentUser?.id && f.friendId === user.id) ||
-                        (f.userId === user.id && f.friendId === this.currentUser?.id)
+                        (f.userId === this.currentUser.id && f.friendId === user.id) ||
+                        (f.userId === user.id && f.friendId === this.currentUser.id)
                     );
                     
                     let buttonText = 'Добавить в друзья';
@@ -1624,7 +2163,7 @@ class MediaHubApp {
                     
                     if (friendship) {
                         if (friendship.status === 'pending') {
-                            if (friendship.userId === this.currentUser?.id) {
+                            if (friendship.userId === this.currentUser.id) {
                                 buttonText = 'Запрос отправлен';
                                 buttonClass = 'btn-secondary';
                                 disabled = true;
@@ -2177,7 +2716,7 @@ class MediaHubApp {
                 `;
             }).join('');
             
-            // Добавляем обработчики для кнопок
+            // Добавляем обработчики для новых кнопок
             friendsList.querySelectorAll('.add-friend-modal-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const userId = parseInt(btn.getAttribute('data-user-id'));
@@ -3140,4 +3679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('2. alexander@ulstu.ru / 123456 (Александр Сазонов)');
     console.log('3. student@ulstu.ru / 123456 (Студент Тестовый)');
     console.log('Или войдите как гость');
+    
+    // Информация о новых данных
+    console.log('Добавлено 50 новых пользователей и 10 новостей (20 ноября - 10 декабря 2025)');
 });
